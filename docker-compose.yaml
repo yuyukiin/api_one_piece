@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  one-piece-api:
+    build: ./
+    container_name: one-piece-api
+    ports:
+      - "3002:3000"
+    depends_on:
+      - one-piece-db
+    networks:
+      - one-piece-network
+
+  one-piece-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: ${USER} # Change this to your user
+      POSTGRES_PASSWORD: ${PASSWORD} # Change this to your password
+      POSTGRES_DB: one_piece_db
+    ports:
+      - 5435:5432
+    networks:
+      - one-piece-network
+
+networks:
+  one-piece-network:
+    driver: bridge
